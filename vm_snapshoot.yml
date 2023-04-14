@@ -1,0 +1,23 @@
+---
+- name: Créer des snapshots de machines virtuelles Proxmox
+  hosts: proxmox_servers
+  gather_facts: false
+  become: true
+  vars:
+    pve_api_user: "votre_utilisateur_api_proxmox"
+    pve_api_password: "votre_mot_de_passe_api_proxmox"
+    pve_vm_id: "l'ID_de_la_machine_virtuelle_à_snapshoter"
+    pve_snapshot_name: "le_nom_du_snapshot"
+    pve_snapshot_desc: "la_description_du_snapshot"
+  tasks:
+    - name: Créer un snapshot de la machine virtuelle
+      proxmox:
+        api_user: "{{ pve_api_user }}"
+        api_password: "{{ pve_api_password }}"
+        api_host: "votre_hôte_proxmox"
+        validate_certs: no
+        nodes: "votre_nœud_proxmox"
+        vmid: "{{ pve_vm_id }}"
+        snapname: "{{ pve_snapshot_name }}"
+        description: "{{ pve_snapshot_desc }}"
+        state: present
